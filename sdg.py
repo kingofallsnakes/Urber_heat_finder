@@ -26,11 +26,9 @@ def fetch_forecast(city):
         print("Error fetching forecast data:", e)
         return None
 def generate_uhi_data(city, temperatures):
-    urban_temperature = temperatures[0] + random.uniform(-2, 2) 
+    urban_temperature = temperatures[0] + random.uniform(-2, 2)  
     rural_temperature = temperatures[1] - random.uniform(2, 4)  
-    
     uhi_effect = urban_temperature - rural_temperature
-    
     uhi_info = {
         "city": city,
         "urban_temperature": urban_temperature,
@@ -39,21 +37,21 @@ def generate_uhi_data(city, temperatures):
     }
     return uhi_info
 def generate_uv_data():
-    return [random.uniform(0, 1) for _ in range(10)]  
+    return [random.uniform(0, 1) for _ in range(10)] 
 def update_uhi_monitor():
     city = city_entry.get()
     if city:
         forecast_data = fetch_forecast(city)
         if forecast_data:
-             temperatures = list(forecast_data.values())
+            temperatures = list(forecast_data.values())
             uhi_info = generate_uhi_data(city, temperatures)
             display_uhi_info(uhi_info)
-            plot_pie_chart(uhi_info['urban_temperature'], uhi_info['rural_temperature'])   
-            plot_spectrum_lines()  
-            plot_uv_graph() 
-            plot_ecg_graph()  
+            plot_pie_chart(uhi_info['urban_temperature'], uhi_info['rural_temperature'])  
+            plot_spectrum_lines() 
+            plot_uv_graph()  
+            plot_ecg_graph() 
             display_forecast(forecast_data) 
-            display_prevention_points(uhi_info['uhi_effect'])
+            display_prevention_points(uhi_info['uhi_effect']) 
         else:
             messagebox.showerror("Error", "Failed to fetch forecast data.")
     else:
@@ -76,8 +74,8 @@ def plot_pie_chart(urban_temp, rural_temp):
     canvas.get_tk_widget().pack()
 def plot_spectrum_lines():
     wavelengths = ['Gamma', 'X-ray', 'Ultraviolet', 'Visible', 'Infrared']
-    intensities = [random.uniform(0, 1) for _ in range(len(wavelengths))]  
-    colors = ['red', 'orange', 'yellow', 'green', 'blue']  
+    intensities = [random.uniform(0, 1) for _ in range(len(wavelengths))] 
+    colors = ['red', 'orange', 'yellow', 'green', 'blue'] 
     fig, ax = plt.subplots()
     bars = ax.bar(wavelengths, intensities, color=colors)
     ax.set_title('Electromagnetic Spectrum', fontsize=14, fontweight='bold', color='orange')
@@ -88,7 +86,7 @@ def plot_spectrum_lines():
         for bar, intensity in zip(bars, intensities):
             bar.set_height(intensity)
         fig.canvas.draw()
-        root.after(1000, update_spectrum_lines)  
+        root.after(1000, update_spectrum_lines)     
     update_spectrum_lines()
     canvas = FigureCanvasTkAgg(fig, master=spectrum_plot_frame)
     canvas.draw()
@@ -106,8 +104,8 @@ def plot_uv_graph():
         uv_data[-1] = random.uniform(0, 1)  
         line.set_ydata(uv_data)
         fig.canvas.draw()
-        ax.set_ylim(0, 1) 
-        root.after(1000, update_uv_graph)  
+        ax.set_ylim(0, 1)  
+        root.after(1000, update_uv_graph) 
     update_uv_graph()
     canvas = FigureCanvasTkAgg(fig, master=uv_plot_frame)
     canvas.draw()
@@ -123,12 +121,12 @@ def plot_ecg_graph():
     def update_ecg_graph():
         nonlocal x, y, line
         y[:-1] = y[1:] 
-        y[-1] = np.random.rand(1)
+        y[-1] = np.random.rand(1)  
         line.set_ydata(y)
         fig.canvas.draw()
         ax.set_ylim(0, 1)  
         ax.set_xlim(x[0], x[-1] + 1)  
-        root.after(100, update_ecg_graph) 
+        root.after(100, update_ecg_graph)  
     update_ecg_graph()
     canvas = FigureCanvasTkAgg(fig, master=ecg_plot_frame)
     canvas.draw()
@@ -141,7 +139,7 @@ def display_forecast(forecast_data):
 def display_prevention_points(uhi_effect):
     for widget in prevention_frame.winfo_children():
         widget.destroy()
-    if uhi_effect > 1: 
+    if uhi_effect > 1:  
         prevention_points = [
             "Increase green spaces (trees, parks)",
             "Implement cool roofs",
@@ -151,7 +149,7 @@ def display_prevention_points(uhi_effect):
             "Create water bodies",
             "Utilize heat-resistant materials for buildings"
         ]
-    elif uhi_effect > 0:  
+    elif uhi_effect > 0: 
         prevention_points = [
             "Increase green spaces (trees, parks)",
             "Implement cool roofs",
@@ -159,7 +157,7 @@ def display_prevention_points(uhi_effect):
             "Enhance urban planning strategies",
             "Install green roofs"
         ]
-    else:  
+    else: 
         prevention_points = [
             "Increase green spaces (trees, parks)",
             "Implement cool roofs"
@@ -171,7 +169,7 @@ def display_prevention_points(uhi_effect):
         label.pack(anchor="w")
 root = tk.Tk()
 root.title("Urban Heat Island Monitor")
-root.geometry("800x600") 
+root.geometry("800x600")  
 for i in range(6):
     root.grid_rowconfigure(i, weight=1)
     root.grid_columnconfigure(i, weight=1)
@@ -179,7 +177,7 @@ result_label = tk.Label(root, text="", font=('Helvetica', 14))
 result_label.grid(row=0, column=0, columnspan=6, sticky="nsew")
 search_frame = tk.Frame(root)
 search_frame.grid(row=1, column=0, columnspan=6, sticky="nsew")
-city_entry = tk.Entry(search_frame, width=30, font=('Helvetica', 12)) 
+city_entry = tk.Entry(search_frame, width=30, font=('Helvetica', 12))  
 city_entry.grid(row=0, column=0, padx=5)
 update_button = tk.Button(search_frame, text="Update", command=update_uhi_monitor, font=('Helvetica', 12))
 update_button.grid(row=0, column=1, padx=5)
@@ -190,7 +188,7 @@ pie_chart_frame.grid(row=2, column=1, sticky="nsew")
 spectrum_plot_frame = tk.Frame(root)
 spectrum_plot_frame.grid(row=2, column=2, sticky="nsew")
 ecg_plot_frame = tk.Frame(root)
-ecg_plot_frame.grid(row=2, column=3, sticky="nsew")  
+ecg_plot_frame.grid(row=2, column=3, sticky="nsew") 
 forecast_frame = tk.Frame(root)
 forecast_frame.grid(row=3, column=0, columnspan=4, sticky="nsew")
 prevention_frame = tk.Frame(root)
