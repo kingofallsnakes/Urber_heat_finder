@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import requests
-API_KEY = "2834c4d751ec54dabb826377faa99d51"
+API_KEY = "b871f5081153d64fcddeb81b204916dc"
 def fetch_forecast(city):
     try:
         url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}"
@@ -75,18 +75,18 @@ def plot_pie_chart(urban_temp, rural_temp):
 def plot_spectrum_lines():
     wavelengths = ['Gamma', 'X-ray', 'Ultraviolet', 'Visible', 'Infrared']
     intensities = [random.uniform(0, 1) for _ in range(len(wavelengths))] 
-    colors = ['red', 'orange', 'yellow', 'green', 'blue'] 
+    colors = ['blue', 'orange', 'pink', 'green', 'red'] 
     fig, ax = plt.subplots()
     bars = ax.bar(wavelengths, intensities, color=colors)
     ax.set_title('Electromagnetic Spectrum', fontsize=14, fontweight='bold', color='orange')
-    ax.set_ylabel('Intensity', fontsize=12)
+    ax.set_ylabel('Intensity', fontsize=12)   
     def update_spectrum_lines():
         nonlocal intensities, bars
         intensities = [random.uniform(0, 1) for _ in range(len(wavelengths))]  
         for bar, intensity in zip(bars, intensities):
             bar.set_height(intensity)
         fig.canvas.draw()
-        root.after(1000, update_spectrum_lines)     
+        root.after(2000, update_spectrum_lines)    
     update_spectrum_lines()
     canvas = FigureCanvasTkAgg(fig, master=spectrum_plot_frame)
     canvas.draw()
@@ -120,42 +120,47 @@ def plot_ecg_graph():
     ax.set_ylabel('Effort Level', fontsize=12)
     def update_ecg_graph():
         nonlocal x, y, line
-        y[:-1] = y[1:] 
-        y[-1] = np.random.rand(1)  
+        y[:-1] = y[1:]
+        y[-1] = np.random.rand()  # Modify this line
         line.set_ydata(y)
         fig.canvas.draw()
-        ax.set_ylim(0, 1)  
-        ax.set_xlim(x[0], x[-1] + 1)  
-        root.after(100, update_ecg_graph)  
+        ax.set_ylim(0, 1)
+        ax.set_xlim(x[0], x[-1] + 1)
+        root.after(100, update_ecg_graph)
     update_ecg_graph()
     canvas = FigureCanvasTkAgg(fig, master=ecg_plot_frame)
     canvas.draw()
     canvas.get_tk_widget().pack()
 def display_forecast(forecast_data):
     forecast_text = "Weather Forecast:\n"
-    for date, temperature in forecast_data.items():
+    colors = ['darkgreen', 'blue', 'red', 'purple', 'orange']  
+    for i, (date, temperature) in enumerate(forecast_data.items()):
+        color = colors[i] if i < len(colors) else 'black'
         forecast_text += f"{date}: {temperature}°C\n"
-    forecast_label.config(text=forecast_text, font=('Helvetica', 12), fg='darkgreen')
+        label = tk.Label(forecast_frame, text=f"{date}: {temperature}°C", font=('Helvetica', 12), fg=color)
+        label.pack()
+
 def display_prevention_points(uhi_effect):
     for widget in prevention_frame.winfo_children():
         widget.destroy()
     if uhi_effect > 1:  
         prevention_points = [
-            "Increase green spaces (trees, parks)",
-            "Implement cool roofs",
-            "Promote reflective pavements",
             "Enhance urban planning strategies",
             "Install green roofs",
             "Create water bodies",
-            "Utilize heat-resistant materials for buildings"
+            "Increase green spaces (trees, parks)",
+            "Promote reflective pavements", 
+            "Utilize heat-resistant materials for buildings",
+            "Implement cool roofs"           
         ]
     elif uhi_effect > 0: 
         prevention_points = [
-            "Increase green spaces (trees, parks)",
-            "Implement cool roofs",
+            
             "Promote reflective pavements",
             "Enhance urban planning strategies",
-            "Install green roofs"
+            "Install green roofs",
+            "Increase green spaces (trees, parks)",
+            "Implement cool roofs",
         ]
     else: 
         prevention_points = [
