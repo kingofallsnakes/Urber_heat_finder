@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import requests
-API_KEY = "b871f5081153d64fcddeb81b204916dc"
+API_KEY = "a7c0428c6217d28fb21b3e035fcf40f3"
 def fetch_forecast(city):
     try:
         url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}"
