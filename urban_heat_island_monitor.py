@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import requests
-API_KEY = "a7c0428c6217d28fb21b3e035fcf40f3"
+API_KEY = "b871f5081153d64fcddeb81b204916dc"
 def fetch_forecast(city):
     try:
         url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={API_KEY}"
@@ -143,21 +143,21 @@ def display_forecast(forecast_data):
 def display_prevention_points(uhi_effect):
     for widget in prevention_frame.winfo_children():
         widget.destroy()
-    if uhi_effect > 1:  
+    if uhi_effect > 3:  
         prevention_points = [
             "Enhance urban planning strategies",
             "Install green roofs",
             "Create water bodies",
-            "Increase green spaces (trees, parks)",
-            "Promote reflective pavements", 
-            "Utilize heat-resistant materials for buildings",
-            "Implement cool roofs"           
+            "Increase green spaces (trees, parks)"
         ]
-    elif uhi_effect > 0: 
-        prevention_points = [
-            
+    elif uhi_effect > 2: 
+        prevention_points = [       
             "Promote reflective pavements",
             "Enhance urban planning strategies",
+            "Install green roofs"
+        ]
+    elif uhi_effect > 1: 
+        prevention_points = [      
             "Install green roofs",
             "Increase green spaces (trees, parks)",
             "Implement cool roofs",
